@@ -3,6 +3,7 @@ package com.example.atipieraproject.service;
 import com.example.atipieraproject.client.GithubClient;
 import com.example.atipieraproject.dto.BranchDTO;
 import com.example.atipieraproject.dto.RepositoryDTO;
+import com.example.atipieraproject.error.GithubUserNotFoundException;
 import com.example.atipieraproject.model.Branch;
 import com.example.atipieraproject.model.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class RepositoryService {
         this.githubClient = githubClient;
     }
 
-    public List<RepositoryDTO> getRepositoriesByLogin(String login) {
+    public List<RepositoryDTO> getRepositoriesByLogin(String login) throws GithubUserNotFoundException {
         List<Repository> repositories = githubClient.getRepositoriesByOwnerLogin(login);
 
         return repositories.stream()

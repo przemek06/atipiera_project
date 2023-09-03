@@ -1,6 +1,7 @@
 package com.example.atipieraproject.controller;
 
 import com.example.atipieraproject.dto.RepositoryDTO;
+import com.example.atipieraproject.error.GithubUserNotFoundException;
 import com.example.atipieraproject.service.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -21,7 +22,7 @@ public class RepositoryController {
     }
 
     @GetMapping(value = "/repos/{login}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RepositoryDTO> getRepositoriesByLogin(@PathVariable String login) {
+    public List<RepositoryDTO> getRepositoriesByLogin(@PathVariable String login) throws GithubUserNotFoundException {
         return repositoryService.getRepositoriesByLogin(login);
     }
 

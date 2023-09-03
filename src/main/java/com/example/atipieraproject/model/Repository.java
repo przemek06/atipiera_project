@@ -15,7 +15,6 @@ import java.util.Map;
 @AllArgsConstructor
 public class Repository {
     private String name;
-    @JsonProperty("owner.login")
     private String ownerName;
     private Boolean fork;
 

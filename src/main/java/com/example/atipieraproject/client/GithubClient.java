@@ -1,5 +1,6 @@
 package com.example.atipieraproject.client;
 
+import com.example.atipieraproject.error.GithubUserNotFoundException;
 import com.example.atipieraproject.model.Branch;
 import com.example.atipieraproject.model.Repository;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface GithubClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/{login}/repos", produces = "application/json")
-    List<Repository> getRepositoriesByOwnerLogin(@PathVariable String login);
+    List<Repository> getRepositoriesByOwnerLogin(@PathVariable String login) throws GithubUserNotFoundException;
 
     @RequestMapping(method = RequestMethod.GET, value = "/repos/{login}/{name}/branches", produces = "application/json")
     List<Branch> getBranchesByRepositoryName(@PathVariable String login, @PathVariable String name);
