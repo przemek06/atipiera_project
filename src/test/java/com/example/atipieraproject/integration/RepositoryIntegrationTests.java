@@ -3,6 +3,8 @@ package com.example.atipieraproject.integration;
 import com.example.atipieraproject.client.GithubClient;
 import com.example.atipieraproject.error.GithubUserNotFoundException;
 import com.example.atipieraproject.model.Branch;
+import com.example.atipieraproject.model.Commit;
+import com.example.atipieraproject.model.Owner;
 import com.example.atipieraproject.model.Repository;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,15 +54,15 @@ public class RepositoryIntegrationTests {
     }
 
     private Repository mockNotForkedRepository() {
-        return new Repository(REPOSITORY_NAME, LOGIN_NO_FORK, false);
+        return new Repository(REPOSITORY_NAME, new Owner(LOGIN_NO_FORK), false);
     }
 
     private Branch mockBranch() {
-        return new Branch(BRANCH_NAME, BRANCH_COMMIT_SHA);
+        return new Branch(BRANCH_NAME, new Commit(BRANCH_COMMIT_SHA));
     }
 
     private Repository mockForkedRepository() {
-        return new Repository(REPOSITORY_NAME, LOGIN_FORK, true);
+        return new Repository(REPOSITORY_NAME, new Owner(LOGIN_FORK), true);
     }
 
     @Test

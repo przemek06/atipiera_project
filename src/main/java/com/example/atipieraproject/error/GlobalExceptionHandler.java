@@ -23,6 +23,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDTO, HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler({ServiceNotRespondingException.class})
+    public ResponseEntity<ErrorDTO> handleServiceNotResponding(ServiceNotRespondingException ex) {
+        ErrorDTO errorDTO = new ErrorDTO(503, ex.getMessage());
+        return new ResponseEntity<>(errorDTO, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
     @ExceptionHandler({HttpMediaTypeNotAcceptableException.class})
     public ResponseEntity<Object> handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex) {
         ErrorDTO errorDTO = new ErrorDTO(406, ex.getMessage());
