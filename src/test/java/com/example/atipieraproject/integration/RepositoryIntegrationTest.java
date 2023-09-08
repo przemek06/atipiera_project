@@ -1,17 +1,14 @@
-package com.example.atipieraproject;
+package com.example.atipieraproject.integration;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.github.tomakehurst.wiremock.junit5.WireMockTest;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.io.IOException;
@@ -25,30 +22,23 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
         "api.github.host=http://localhost:8089/"
 })
 @AutoConfigureWebTestClient
-@RunWith(SpringRunner.class)
-public class RepositoryIntegrationTests {
+@WireMockTest(httpPort = 8089)
+public class RepositoryIntegrationTest {
 
     private static final String LOGIN_NON_EMPTY = "user_1";
     private static final String LOGIN_EMPTY = "user_2";
     private static final String LOGIN_NON_EXISTING = "user_3";
     private static final String REPOSITORY_NAME = "r_name";
     private static final String EXPECTED_JSON_EMPTY_BODY = "{\"repositories\": []}";
-    private static final String EXPECTED_JSON_NON_EMPTY_BODY = "{\"repositories\": [" +
-            "{\"name\": \"r_name\", \"owner\": \"user_1\", \"branches\": [" +
-            "{\"name\": \"BRANCH_NAME\", \"BRANCH_COMMIT_SHA\": \"lastCommitSha_1\"}" +
-            "]}" +
-            "]}";
 
     @Autowired
     WebTestClient webTestClient;
     @Autowired
     private ResourceLoader resourceLoader;
 
-    @Rule
-    public WireMockRule wireMockRule = new WireMockRule(8089);
-
     @Test
     public void whenWrongAcceptValueThen406ResponseStatusTest() {
+
         // when
         var exc = webTestClient.get()
                 .uri("/repos/{login}", LOGIN_NON_EMPTY)
