@@ -5,6 +5,7 @@ import com.example.atipieraproject.error.GithubUserNotFoundException;
 import com.example.atipieraproject.error.ServiceNotRespondingException;
 import com.example.atipieraproject.model.Branch;
 import com.example.atipieraproject.model.Repository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -19,9 +20,9 @@ public class GithubClientImpl implements GithubClient {
 
     private final WebClient webClient;
 
-    public GithubClientImpl(WebClient.Builder webClientBuilder) {
+    public GithubClientImpl(WebClient.Builder webClientBuilder, @Value("${api.github.host}") final String baseUrl) {
         this.webClient = webClientBuilder
-                .baseUrl("https://api.github.com/")
+                .baseUrl(baseUrl)
                 .build();
     }
 
@@ -52,4 +53,6 @@ public class GithubClientImpl implements GithubClient {
 
         return response.getBody();
     }
+
+
 }

@@ -1,0 +1,14 @@
+{
+  "repositories": [
+    {
+      "name": "r_name",
+      "owner": "user_1",
+      "branches": [
+        {
+          "name": "b_name",
+          "lastCommitSha": "b_sha"
+        }
+      ]
+    }
+  ]
+}
